@@ -1,13 +1,10 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./App.css";
-import image1 from "./images/desktop-image-hero-1.jpg";
-import image1Mobile from "./images/mobile-image-hero-1.jpg";
+import heroes from "./data";
 
 import imageAboutDark from "./images/image-about-dark.jpg";
 import imageAboutLight from "./images/image-about-light.jpg";
-
 import logo from "./images/logo.svg";
-
 import arrowIcon from "./images/icon-arrow.svg";
 import leftIcon from "./images/icon-angle-left.svg";
 import rightIcon from "./images/icon-angle-right.svg";
@@ -16,6 +13,8 @@ import closeIcon from "./images/icon-close.svg";
 
 function App() {
   const navbar = useRef(null);
+
+  const [index, setIndex] = useState(1);
 
   const openNavbar = () => {
     navbar.current.classList.add("navbar-wraper-open");
@@ -27,6 +26,36 @@ function App() {
     navbar.current.classList.add("navbar-wraper-close");
   };
 
+  const nextImage = () => {
+    setIndex((oldIndex) => {
+      if (oldIndex === 2) {
+        return 0;
+      } else {
+        return oldIndex + 1;
+      }
+    });
+  };
+
+  const previousImage = () => {
+    setIndex((oldIndex) => {
+      if (oldIndex === 0) {
+        return 2;
+      } else {
+        return oldIndex - 1;
+      }
+    });
+  };
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      nextImage();
+    }, [3000]);
+
+    return () => {
+      clearTimeout(id);
+    };
+  }, [index]);
+
   return (
     <div className="App">
       <div className="navbar-wraper navbar-wraper-close" ref={navbar}>
@@ -35,16 +64,16 @@ function App() {
           <nav>
             <ul>
               <li>
-                <a href="#">home</a>
+                <a href="/#">home</a>
               </li>
               <li>
-                <a href="#">shop</a>
+                <a href="/#">shop</a>
               </li>
               <li>
-                <a href="#">about</a>
+                <a href="/#">about</a>
               </li>
               <li>
-                <a href="#">contact</a>
+                <a href="/#">contact</a>
               </li>
             </ul>
           </nav>
@@ -60,29 +89,37 @@ function App() {
         <img src={logo} alt="logo" id="logo" />
         <ul className="desktop">
           <li>
-            <a href="#">home</a>
+            <a href="/#">home</a>
           </li>
           <li>
-            <a href="#">shop</a>
+            <a href="/#">shop</a>
           </li>
           <li>
-            <a href="#">about</a>
+            <a href="/#">about</a>
           </li>
           <li>
-            <a href="#">contact</a>
+            <a href="/#">contact</a>
           </li>
         </ul>
       </nav>
 
       <div className="slider">
         <div className="hero">
-          <img src={image1} alt="image" className="desktop" />
-          <img src={image1Mobile} alt="" className="mobile" />
+          <img
+            src={heroes[index].image_desktop}
+            alt="something with chair"
+            className="desktop first"
+          />
+          <img
+            src={heroes[index].image_mobile}
+            alt="chair"
+            className="mobile"
+          />
           <div className="buttons mobile">
-            <button>
+            <button onClick={previousImage}>
               <img src={leftIcon} alt="arrow left" />
             </button>
-            <button>
+            <button onClick={nextImage}>
               <img src={rightIcon} alt="arrow right" />
             </button>
           </div>
@@ -90,24 +127,18 @@ function App() {
 
         <div className="slider-text">
           <div className="text-wraper">
-            <h1>Discover innovative ways to decorate</h1>
-            <p>
-              We provide unmatched quality, comfort, and style for property
-              owners across the country. Our experts combine form and function
-              in bringing your vision to life. Create a room in your own style
-              with our collection and make your property a reflection of you and
-              what you love.
-            </p>
-            <a href="#">
+            <h1>{heroes[index].title}</h1>
+            <p>{heroes[index].text}</p>
+            <a href="/#">
               Shop now <img src={arrowIcon} alt="arrow icon" />
             </a>
           </div>
 
           <div className="buttons desktop">
-            <button>
+            <button onClick={previousImage}>
               <img src={leftIcon} alt="arrow left" />
             </button>
-            <button>
+            <button onClick={nextImage}>
               <img src={rightIcon} alt="arrow right" />
             </button>
           </div>
@@ -116,7 +147,7 @@ function App() {
 
       <div className="about">
         <div className="image">
-          <img src={imageAboutDark} alt="about dark image" />
+          <img src={imageAboutDark} alt="about dark" />
         </div>
         <div className="about-text">
           <div className="container">
@@ -132,7 +163,7 @@ function App() {
           </div>
         </div>
         <div className="image">
-          <img src={imageAboutLight} alt="about dark image" />
+          <img src={imageAboutLight} alt="about dark" />
         </div>
       </div>
     </div>
