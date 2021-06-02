@@ -20,6 +20,7 @@ html {
 
 .App {
   position: relative;
+  overflow: hidden;
 }
 
 .desktop {
