@@ -154,6 +154,7 @@ html {
   letter-spacing: 10px;
   font-weight: 700;
   color: var(--black);
+  margin-bottom: 15px;
 }
 
 .slider-text a:hover {
@@ -208,7 +209,7 @@ html {
   line-height: 20px;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .mobile {
     display: none;
   }
