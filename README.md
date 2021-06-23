@@ -1,1 +1,1 @@
-You can visit this site live on https://app.netlify.com/sites/chair-landing-page/overview
+You can visit this site live on https://chair-landing-page.netlify.app/
